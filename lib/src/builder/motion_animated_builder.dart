@@ -461,7 +461,7 @@ class MotionBuilderState extends State<MotionBuilder>
       vsync: this,
     );
     final AnimationController sizeController = AnimationController(
-      duration: kAnimationDuration,
+      duration: insertDuration,
       vsync: this,
     );
 
