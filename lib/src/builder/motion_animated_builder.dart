@@ -482,18 +482,20 @@ class MotionBuilderState extends State<MotionBuilder>
 
     if (childrenMap.containsKey(itemIndex)) {
       for (final entry in childrenMap.entries) {
-        if (entry.key == itemIndex) {
-          updatedChildrenMap[itemIndex] = motionData.copyWith(visible: false);
-          updatedChildrenMap[entry.key + 1] = entry.value.copyWith(
-              startOffset: _itemOffsetAt(entry.key),
-              endOffset: getChildOffset(entry.key));
-        } else if (entry.key > itemIndex) {
-          updatedChildrenMap[entry.key + 1] = entry.value.copyWith(
-              startOffset: _itemOffsetAt(entry.key),
-              endOffset: getChildOffset(entry.key));
-        } else {
-          updatedChildrenMap[entry.key] = entry.value;
-        }
+        // コメントアウトすることで追加次のアニメーションをなくしている
+        // if (entry.key == itemIndex) {
+        //   updatedChildrenMap[itemIndex] = motionData.copyWith(visible: false);
+        //   updatedChildrenMap[entry.key + 1] = entry.value.copyWith(
+        //       startOffset: _itemOffsetAt(entry.key),
+        //       endOffset: getChildOffset(entry.key));
+        // } else if (entry.key > itemIndex) {
+        //   updatedChildrenMap[entry.key + 1] = entry.value.copyWith(
+        //       startOffset: _itemOffsetAt(entry.key),
+        //       endOffset: getChildOffset(entry.key));
+        // } else {
+        //   updatedChildrenMap[entry.key] = entry.value;
+        // }
+        updatedChildrenMap[entry.key] = entry.value;
       }
       childrenMap.clear();
       childrenMap.addAll(updatedChildrenMap);
@@ -843,12 +845,7 @@ class MotionBuilderState extends State<MotionBuilder>
   Widget _insertItemBuilder(_ActiveItem? incomingItem, Widget child) {
     final Animation<double> animation =
         incomingItem?.controller ?? kAlwaysCompleteAnimation;
-    final Animation<double> sizeAnimation =
-        incomingItem?.sizeAnimation ?? kAlwaysCompleteAnimation;
-    return SizeTransition(
-        axis: widget.scrollDirection,
-        sizeFactor: sizeAnimation,
-        child: widget.insertAnimationBuilder(context, child, animation));
+    return widget.insertAnimationBuilder(context, child, animation);
   }
 }
 
